@@ -19,7 +19,7 @@ class MySQLConnection:
         self.connection = connection #Establecemos conexión con BD
 
    #El método que se encarga de la consulta   
-   def query_db(self, query, data=None):
+    def query_db(self, query, data=None):
        with self.connection.cursor() as cursor:
            try:
                query = cursor.mogrify(query, data)
