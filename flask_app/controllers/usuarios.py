@@ -9,12 +9,8 @@ bcrypt = Bcrypt(app)
 
 @app.route ('/')
 def index ():
-
     return render_template('index.html')
 
-@app.route ('/registro_ok')
-def ok():
-    return render_template('ok.html')
 
 @app.route('/registrar', methods = ['POST'])
 def registrar():
@@ -35,7 +31,9 @@ def registrar():
         flash('No fue posible completar el registro. Inténtalo nuevamente.','registro')
         return redirect('/')
 
-    return redirect('/registro_ok')
+    flash( 'Registro exitoso. Ya puedes iniciar sesión.','registro_exitoso')
+
+    return redirect('/')
 
 
 @app.route('/dashboard')
