@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Stargaze 2</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+
+<body>
+    <nav>
+        <h2> Bienvenido {{session.usuario_nombre}}</h2>
+        <div class="botones_nav">
+            <a href="/logout" class="btn">Cerrar sesión</a>
+        </div>
+    </nav>
+
+    <main class="dashboard-container">
+
+
+        <!-------- CREAR PUBLICACION --------->
+        <section class="crear-publicacion">
+        
+            <h2>Nueva publicación</h2>
+
+            {% with messages = get_flashed_messages(category_filter=['publicacion']) %}
+                {% if messages %}
+                    <div class="mensajes-error">
+                        {% for mensaje in messages %}
+                            <p class="error">{{mensaje}}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form action="/publicaciones/crear" method="POST" class="form-publicacion">
+                <div class="columna-izquierda">
+                    <div class="campo">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" name="nombre" id="nombre" placeholder="Nombre estrella/constelacion">
+                    </div>
+
+                    <div class="campo">
+                        <label for="fecha">Fecha:</label>
+                        <input type="date" name="fecha" id="fecha" placeholder="Fecha Encuentro">
+                    </div>
+
+                    <div class="campo">
+                        <label for="lugar">Lugar:</label>
+                        <input type="text" name="lugar" id="lugar" placeholder="Lugar de Encuentro">
+                    </div>
+                </div>
+
+                <div class="clumna-derecha">
+                    <div class="campo">
+                        <label for="descripcion">Descripcion:</label>
+                        <textarea type="text" name="descripcion" id="descripcion" placeholder="Descripción del encuentro"></textarea>
+                    </div>
+                </div>
+
+                <div class="acciones-formulario">
+                    <input type="submit" value="Compartir" class="btn">
+                </div>
+
+            </form>
+        </section>
+
+        <!-------- OBSERVACIONES  --------->
+        <section class="observaciones">
+
+            <h2>Todas las observaciones de estrellas</h2>
+
+            {% for publicacion in publicaciones %}
+
+            <div class="publicacion">
+
+                <h3>{{ publicacion.nombre }}</h3>
+
+                <p class="meta-publicacion">
+                    <strong>{{ publicacion.usuario_nombre }}</strong>
+                    {{ publicacion.fecha }}
+                    {{ publicacion.lugar }}
+                </p>
+                
+                <p class="descripcion-publicacion">{{ publicacion.descripcion }}</p>
+
+                {% if publicacion.usuario_id == session['usuario_id'] %}
+                <div class="acciones-publicacion">
+                    <a href="/publicaciones/editar/{{ publicacion.id }}" class="btn btn-editar">Editar</a>
+                    <a href="/publicaciones/borrar/{{ publicacion.id }}" class="btn btn-borrar">Borrar</a>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </section>
+
+    </main>
+</body>
+
+
+</html>

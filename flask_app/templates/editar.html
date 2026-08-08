@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar publicacion </title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/editar.css') }}">
+</head>
+<body>
+    <main class="editar-container">
+
+    <article class="tarjeta-editar">
+        <h2>Actualiza tu publicacion</h2>
+        <p class="subtitulo-editar">{{ publicacion.nombre }}</p>
+
+        <form class="formulario-editar" action="/publicaciones/actualizar/{{ publicacion.id }}" method="post">
+            <div class="campo">
+                <label for="nombre">nombre:</label>
+                <input type="text" name="nombre" id="nombre" value="{{ publicacion.nombre }}">
+            </div>
+
+            <div class="campo">
+                <label for="fecha">Fecha:</label>
+                <input type="date" name="fecha" id="fecha" value="{{ publicacion.fecha.strftime('%d-%m-%Y') }}">
+            </div>
+
+            <div class="campo">
+                <label for="lugar">Lugar:</label>
+                <input type="text" name="lugar" id="lugar" value="{{ publicacion.lugar }}">
+            </div>
+
+            <div class="campo">
+                <label for="descripcion">Descripcion:</label>
+                <input type="text" name="descripcion" id="descripcion" value="{{ publicacion.descripcion }}">
+            </div>
+
+            {% with messages = get_flashed_messages(category_filter=['publicacion']) %}
+                {% if messages %}
+                    {% for mensaje in messages %}
+                        <p class="error">{{mensaje}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div class="acciones-editar">
+                <a href="/dashboard" class="btn">Volver</a>
+                <input type="submit" value="guardar" class="btn">
+            </div>
+        </form>
+    </article>
+</main>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stargaze 2</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+    <section class="principal">
+        <article class="tarjeta-formulario">
+        
+            <!-------- FORMULARIO REGISTRO --------->
+            <h2>Registrate</h2>
+             
+            <form action="/registrar" method="post">
+
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre">
+
+                <label for="apellido">Apellido:</label>
+                <input type="text" id="apellido" name="apellido">
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+
+                <label for="contrasena">Contraseña</label>
+                <input type="password" id="contrasena" name="contrasena">
+
+                <label for="contrasena2">Confirmar contraseña</label>
+                <input type="password" id="contrasena2" name="contrasena2">
+
+                {% with messages = get_flashed_messages(category_filter=['registro']) %}
+                        {% if messages %}
+                            {% for mensaje in messages %}
+                                <p class="error">{{mensaje}}</p>
+                            {% endfor %}
+                        {% endif %}
+                {% endwith %}
+
+                <input type="submit" value="Registrar" class="btn">
+            </form>
+        </article>
+
+        
+       <!-------- INICIAR SESION --------->
+        <article class="tarjeta-formulario">
+            <h2>Iniciar Sesion</h2>
+
+            <form action="/login" method="post">
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+
+                <label for="contrasena">Contraseña</label>
+                <input type="password" id="contrasena" name="contrasena">
+
+                <input type="submit" value="Iniciar Sesion" class="btn">
+
+            </form>
+        </article>
+    </section>
+</body>
+</html>
